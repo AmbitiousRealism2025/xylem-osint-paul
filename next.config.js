@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  outputFileTracingRoot: '/Users/ambrealismwork/Desktop/coding-projects/xylem-osint-paul',
+  output: 'standalone',
 }
 
 export default nextConfig
