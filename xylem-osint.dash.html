@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xylem Strategic Assessment — HydroCav Pool & Spa</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0a0e14;
+  --bg-card: #111820;
+  --bg-card-hover: #161e28;
+  --bg-surface: #1a2332;
+  --border: #1e2a3a;
+  --border-accent: #2a3a4e;
+  --text-primary: #e8edf3;
+  --text-secondary: #8a9bb5;
+  --text-muted: #56667a;
+  --accent-blue: #3b8beb;
+  --accent-cyan: #22d3ee;
+  --accent-green: #34d399;
+  --accent-amber: #fbbf24;
+  --accent-red: #f87171;
+  --accent-purple: #a78bfa;
+  --gold: #d4a853;
+  --gold-dim: rgba(212,168,83,0.15);
+  --fluidra-color: #34d399;
+  --pentair-color: #3b8beb;
+  --xylem-color: #fbbf24;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  font-size: 15px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* === NOISE OVERLAY === */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 3px; }
+
+/* === HEADER === */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,14,20,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px;
+}
+
+.header-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-dim);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(212,168,83,0.25);
+}
+
+.header-title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.header-meta .dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  display: inline-block;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* === NAV PILLS === */
+.nav-bar {
+  background: rgba(10,14,20,0.6);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px;
+  position: sticky;
+  top: 64px;
+  z-index: 99;
+}
+
+.nav-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  gap: 4px;
+  padding: 8px 0;
+  overflow-x: auto;
+}
+
+.nav-pill {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  background: none;
+  text-decoration: none;
+}
+
+.nav-pill:hover { color: var(--text-secondary); background: var(--bg-card); }
+.nav-pill.active { color: var(--text-primary); background: var(--bg-surface); border-color: var(--border-accent); }
+
+/* === MAIN LAYOUT === */
+.main {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 32px 48px 80px;
+}
+
+/* === HERO === */
+.hero {
+  margin-bottom: 48px;
+  animation: fadeUp 0.8s ease-out;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--text-primary);
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 720px;
+}
+
+.hero-sub strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* === VERDICT STRIP === */
+.verdict-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 48px;
+  animation: fadeUp 0.8s ease-out 0.1s both;
+}
+
+.verdict-card {
+  background: var(--bg-card);
+  padding: 28px 32px;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.verdict-card:hover { background: var(--bg-card-hover); }
+
+.verdict-rank {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.verdict-company {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+}
+
+.verdict-score {
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.verdict-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+.verdict-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  border-radius: 0 0 0 var(--radius-lg);
+  transition: width 1.2s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* === SECTION === */
+section {
+  margin-bottom: 56px;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-number {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  min-width: 28px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+/* === CARDS & GRIDS === */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: all 0.3s;
+}
+
+.card:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+}
+
+.card-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.card-value {
+  font-family: var(--font-mono);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.card-note {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+/* === FINANCIAL TABLE === */
+.fin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.fin-table th {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-accent);
+  font-weight: 500;
+}
+
+.fin-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.fin-table tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+.fin-table .val {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* === GAP TABLE === */
+.gap-row {
+  display: grid;
+  grid-template-columns: 200px 120px 1fr;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.gap-row:hover { background: rgba(255,255,255,0.015); }
+
+.gap-row:last-child { border-bottom: none; }
+
+.gap-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.severity {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.severity.critical { color: var(--accent-red); background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.2); }
+.severity.high { color: var(--accent-amber); background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); }
+.severity.whitespace { color: var(--accent-purple); background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2); }
+
+.gap-note {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+/* === SIGNAL BARS === */
+.signal-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.signal-row:last-child { border-bottom: none; }
+
+.signal-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  min-width: 240px;
+  color: var(--text-primary);
+}
+
+.signal-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-surface);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.signal-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1.5s cubic-bezier(0.22,1,0.36,1);
+}
+
+.signal-rating {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 60px;
+  text-align: right;
+}
+
+/* === 80/20 RISK SECTION === */
+.risk-banner {
+  background: linear-gradient(135deg, rgba(248,113,113,0.08), rgba(248,113,113,0.02));
+  border: 1px solid rgba(248,113,113,0.2);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.risk-banner::before {
+  content: '⚠';
+  position: absolute;
+  top: -20px;
+  right: 20px;
+  font-size: 120px;
+  opacity: 0.04;
+}
+
+.risk-banner h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--accent-red);
+  margin-bottom: 16px;
+}
+
+.risk-banner p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 800px;
+}
+
+.risk-signals {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.risk-signal {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.risk-signal::before {
+  content: '—';
+  color: var(--accent-red);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* === COMPETITOR COMPARISON === */
+.comp-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.comp-card:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.comp-card .accent-line {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+.comp-score-ring {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.comp-score-ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid var(--border);
+}
+
+.comp-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+}
+
+.comp-card .comp-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  margin-bottom: 16px;
+}
+
+.comp-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+}
+
+.comp-detail {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-weight: 300;
+}
+
+/* === PATHWAY CARDS === */
+.pathway-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  gap: 16px;
+  transition: all 0.3s;
+}
+
+.pathway-card:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+}
+
+.pathway-num {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--border-accent);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.pathway-card h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.pathway-card p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* === ESG BADGES === */
+.esg-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.esg-badge {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.esg-badge:hover { border-color: var(--accent-green); background: rgba(52,211,153,0.04); }
+
+.esg-icon {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.esg-badge .card-value {
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+
+.esg-badge .card-note {
+  font-size: 0.7rem;
+}
+
+/* === TIMELINE === */
+.timeline {
+  position: relative;
+  padding-left: 32px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--border-accent);
+}
+
+.tl-item {
+  position: relative;
+  padding-bottom: 24px;
+}
+
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -29px;
+  top: 7px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  border: 2px solid var(--accent-blue);
+}
+
+.tl-date {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.tl-title {
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 4px;
+}
+
+.tl-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* === FOOTER === */
+.footer {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 32px 48px;
+  border-top: 1px solid var(--border);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  font-weight: 300;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1200px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .esg-grid { grid-template-columns: repeat(2, 1fr); }
+  .risk-signals { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 900px) {
+  .header, .nav-bar, .main, .footer { padding-left: 24px; padding-right: 24px; }
+  .hero h1 { font-size: 2rem; }
+  .verdict-strip { grid-template-columns: 1fr; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .gap-row { grid-template-columns: 1fr; gap: 8px; }
+  .signal-row { flex-direction: column; align-items: flex-start; }
+  .signal-label { min-width: unset; }
+}
+
+/* === PRINT === */
+@media print {
+  body::before { display: none; }
+  .header, .nav-bar { position: static; }
+  .card:hover, .comp-card:hover, .pathway-card:hover { transform: none; box-shadow: none; }
+  .animate-in { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <span class="header-badge">OSINT Assessment</span>
+      <span class="header-title">Xylem Inc. — Strategic Acquirer Analysis for HydroCav Pool & Spa</span>
+    </div>
+    <div class="header-meta">
+      <span><span class="dot"></span>&ensp;Compiled Report</span>
+      <span>FEB 2026</span>
+      <span>CONFIDENTIAL</span>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <div class="nav-inner">
+    <a href="#verdict" class="nav-pill active">Verdict</a>
+    <a href="#financials" class="nav-pill">Financials</a>
+    <a href="#aquatics" class="nav-pill">Aquatics Portfolio</a>
+    <a href="#gaps" class="nav-pill">Gap Analysis</a>
+    <a href="#esg" class="nav-pill">ESG Alignment</a>
+    <a href="#alignment" class="nav-pill">Value-Driver Fit</a>
+    <a href="#risk" class="nav-pill">80/20 Risk</a>
+    <a href="#competitors" class="nav-pill">Competitor Fit</a>
+    <a href="#diligence" class="nav-pill">Diligence</a>
+    <a href="#pathways" class="nav-pill">Pathways</a>
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero" id="verdict">
+    <div class="hero-eyebrow">Strategic Acquirer Intelligence</div>
+    <h1>A Plausible but Imperfect<br>Strategic Acquirer</h1>
+    <p class="hero-sub">
+      Xylem's ESG narrative, aquatics footprint, and balance sheet align beautifully — but the operational reality of <strong>80/20 portfolio pruning</strong>, an <strong>AI/software M&A focus</strong>, and <strong>organizational scale mismatch</strong> create substantial headwinds. <strong>Pentair and Fluidra are significantly stronger fits.</strong>
+    </p>
+  </div>
+
+  <!-- VERDICT STRIP -->
+  <div class="verdict-strip">
+    <div class="verdict-card">
+      <div class="verdict-rank">Rank #1 — Best Fit</div>
+      <div class="verdict-company" style="color:var(--fluidra-color)">Fluidra</div>
+      <div class="verdict-score" style="color:var(--fluidra-color)">10<span style="font-size:0.9rem;color:var(--text-muted)">/10</span></div>
+      <div class="verdict-label">Pool & wellness is their entire business. Active non-chemical innovation (Freepool2). ~€2.3B revenue.</div>
+      <div class="verdict-bar" style="width:100%;background:var(--fluidra-color)"></div>
+    </div>
+    <div class="verdict-card">
+      <div class="verdict-rank">Rank #2 — Strong Fit</div>
+      <div class="verdict-company" style="color:var(--pentair-color)">Pentair</div>
+      <div class="verdict-score" style="color:var(--pentair-color)">9<span style="font-size:0.9rem;color:var(--text-muted)">/10</span></div>
+      <div class="verdict-label">Pool/spa is ~40%+ of ~$3.8B revenue. Markets "96% chloramine reduction without harmful chemicals."</div>
+      <div class="verdict-bar" style="width:90%;background:var(--pentair-color)"></div>
+    </div>
+    <div class="verdict-card">
+      <div class="verdict-rank">Rank #3 — Conditional Fit</div>
+      <div class="verdict-company" style="color:var(--xylem-color)">Xylem</div>
+      <div class="verdict-score" style="color:var(--xylem-color)">5<span style="font-size:0.9rem;color:var(--text-muted)">/10</span></div>
+      <div class="verdict-label">Entry point via Neptune Benson, but aquatics may be in the "prune" column under 80/20 simplification.</div>
+      <div class="verdict-bar" style="width:50%;background:var(--xylem-color)"></div>
+    </div>
+  </div>
+
+  <!-- FINANCIALS -->
+  <section id="financials" class="animate-in">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Financial Profile & Capacity</h2>
+    </div>
+    <div class="grid-4" style="margin-bottom:24px">
+      <div class="card">
+        <div class="card-label">Revenue (FY2025)</div>
+        <div class="card-value">$9.0B</div>
+        <div class="card-note">Record year · Fortune 500</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Adj. EBITDA</div>
+        <div class="card-value">~$2.0B</div>
+        <div class="card-note">22.2% margin</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Free Cash Flow</div>
+        <div class="card-value">$942M</div>
+        <div class="card-note">Strong conversion</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Net Leverage</div>
+        <div class="card-value">0.4–0.5×</div>
+        <div class="card-note">$4–5B additional capacity</div>
+      </div>
+    </div>
+    <div class="card">
+      <table class="fin-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Value</th>
+            <th>Implication for HydroCav</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Available Liquidity</td>
+            <td class="val">~$2.2B</td>
+            <td>A $10–50M tuck-in is easily absorbed</td>
+          </tr>
+          <tr>
+            <td>Credit Rating</td>
+            <td class="val">BBB / Baa2</td>
+            <td>Investment-grade; low cost of capital</td>
+          </tr>
+          <tr>
+            <td>Stated M&A Budget</td>
+            <td class="val">~$1B/yr</td>
+            <td>Active acquirer across all deal sizes</td>
+          </tr>
+          <tr>
+            <td>Historical Multiples</td>
+            <td class="val">10–17× EBITDA</td>
+            <td>Standard range for strategic water tech</td>
+          </tr>
+          <tr>
+            <td>FY2026 Guidance</td>
+            <td class="val">$9.1–9.2B</td>
+            <td>Conservative; 2% headwind from simplification</td>
+          </tr>
+          <tr>
+            <td>Capital Allocation Priority</td>
+            <td class="val">M&A first</td>
+            <td>Reinvest → M&A → dividends → buybacks</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- AQUATICS PORTFOLIO -->
+  <section id="aquatics" class="animate-in">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <h2 class="section-title">Aquatics Portfolio — Neptune Benson Heritage</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-label">Filtration</div>
+        <h4 style="font-size:1rem;margin-bottom:8px">Defender® Regenerative Media</h4>
+        <p class="card-note">Gold standard commercial pool filtration. Filters to 1 micron. Up to 90% water savings, 30–50% chemical reduction vs. sand filters. Some facilities report ROI in under 1 year.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">UV Disinfection</div>
+        <h4 style="font-size:1rem;margin-bottom:8px">ETS-UV™ / ATG UV™ Wafer®</h4>
+        <p class="card-note">Medium-pressure UV validated for 99.9% Crypto/Giardia reduction. Marketed for chloramine breakdown, improved air quality, and reduced shock treatments. Multi-barrier approach.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Monitoring & Control</div>
+        <h4 style="font-size:1rem;margin-bottom:8px">Blu-Sentinel Controllers</h4>
+        <p class="card-note">Neptune Benson × Wallace & Tiernan. Built-in Ethernet, remote smart device operation. Reduces chemical overspend via accurate dosing. Multi-site standardization.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Global Disinfection</div>
+        <h4 style="font-size:1rem;margin-bottom:8px">Wedeco Brand</h4>
+        <p class="card-note">250,000+ UV and ozone installations worldwide. Positioned as "chemical-free and environmentally friendly" treatment. Primarily municipal/industrial.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Components</div>
+        <h4 style="font-size:1rem;margin-bottom:8px">Lawson Aquatics®</h4>
+        <p class="card-note">Pool fittings and accessories. Completes the mechanical room offering alongside core treatment and monitoring platforms.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Proven Installations</div>
+        <h4 style="font-size:1rem;margin-bottom:8px">Case Studies</h4>
+        <p class="card-note">FINA World Championships, Georgia Aquarium, European resort spas, St. Petersburg FL (30% sodium hypochlorite reduction).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAP ANALYSIS -->
+  <section id="gaps" class="animate-in">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Portfolio Gap Analysis — Where HydroCav Fits</h2>
+    </div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div class="gap-row" style="background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border-accent)">
+        <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted)">Capability</div>
+        <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted)">Severity</div>
+        <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted)">Assessment</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-name">Hydrodynamic Cavitation</div>
+        <div><span class="severity whitespace">Whitespace</span></div>
+        <div class="gap-note">Zero products, patents, or partnerships. Complete greenfield for HydroCav.</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-name">Pool-Scale AOP</div>
+        <div><span class="severity critical">Critical</span></div>
+        <div class="gap-note">MiPRO AOP exists but is over-engineered for recreational water applications.</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-name">Non-Chemical Treatment</div>
+        <div><span class="severity high">High</span></div>
+        <div class="gap-note">UV supplements chlorine but doesn't replace it. No pathway to true chemical reduction at the source.</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-name">Pool/Spa IoT</div>
+        <div><span class="severity high">High</span></div>
+        <div class="gap-note">Xylem Vue is utility-focused. No dedicated pool automation or connected device platform.</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-name">Indoor Air Quality</div>
+        <div><span class="severity high">High</span></div>
+        <div class="gap-note">Indirect water-side UV only. No dedicated air-side chloramine treatment.</div>
+      </div>
+      <div class="gap-row">
+        <div class="gap-name">Salt Water Alternatives</div>
+        <div><span class="severity whitespace">Whitespace</span></div>
+        <div class="gap-note">Market dominated by Pentair, Hayward, CircuPool. Xylem has no offering.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESG ALIGNMENT -->
+  <section id="esg" class="animate-in">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">ESG & Sustainability Alignment</h2>
+    </div>
+    <div class="esg-grid" style="margin-bottom:24px">
+      <div class="esg-badge">
+        <span class="esg-icon">🏆</span>
+        <div class="card-value">#6</div>
+        <div class="card-note">Barron's 100 Most Sustainable (2025)</div>
+      </div>
+      <div class="esg-badge">
+        <span class="esg-icon">📊</span>
+        <div class="card-value">MSCI AA</div>
+        <div class="card-note">ESG rating</div>
+      </div>
+      <div class="esg-badge">
+        <span class="esg-icon">🌱</span>
+        <div class="card-value">$1B</div>
+        <div class="card-note">Green bond issued</div>
+      </div>
+      <div class="esg-badge">
+        <span class="esg-icon">🎯</span>
+        <div class="card-value">4/4</div>
+        <div class="card-note">2025 customer sustainability goals met</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">Climate Commitments</div>
+        <p class="card-note" style="line-height:1.7">Net-zero by 2050. SBTi-approved 2030 targets: <strong style="color:var(--text-primary)">42% absolute reduction</strong> Scope 1 & 2, <strong style="color:var(--text-primary)">52% Scope 3</strong> economic intensity reduction. Revolving credit facility pricing tied to sustainability KPIs — meaning customer impact claims are governance-linked, not just marketing.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">Critical Caveat</div>
+        <p class="card-note" style="line-height:1.7"><strong style="color:var(--accent-amber)">No corporate-level KPI targeting chemical reduction.</strong> ESG targets focus on GHG, water demand, and WASH access. Chemical-free treatment is a product-level narrative, not a board commitment. Xylem also continues to sell chemical feeders and chemical supplies.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUE-DRIVER ALIGNMENT -->
+  <section id="alignment" class="animate-in">
+    <div class="section-header">
+      <span class="section-number">05</span>
+      <h2 class="section-title">HydroCav Value-Driver Alignment</h2>
+    </div>
+    <div class="card">
+      <div class="signal-row">
+        <div class="signal-label">Sustainability & Chemical Reduction</div>
+        <div class="signal-bar-track">
+          <div class="signal-bar-fill" style="width:85%;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan))"></div>
+        </div>
+        <div class="signal-rating" style="color:var(--accent-green)">Strong</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-label">Labor Reduction & Uptime</div>
+        <div class="signal-bar-track">
+          <div class="signal-bar-fill" style="width:82%;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan))"></div>
+        </div>
+        <div class="signal-rating" style="color:var(--accent-green)">Strong</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-label">Indoor Air Quality / Chloramines</div>
+        <div class="signal-bar-track">
+          <div class="signal-bar-fill" style="width:78%;background:linear-gradient(90deg,var(--accent-cyan),var(--accent-blue))"></div>
+        </div>
+        <div class="signal-rating" style="color:var(--accent-cyan)">Strong</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-label">Pathogen Elimination</div>
+        <div class="signal-bar-track">
+          <div class="signal-bar-fill" style="width:55%;background:linear-gradient(90deg,var(--accent-amber),var(--accent-amber))"></div>
+        </div>
+        <div class="signal-rating" style="color:var(--accent-amber)">Moderate</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-label">Regulatory Compliance Readiness</div>
+        <div class="signal-bar-track">
+          <div class="signal-bar-fill" style="width:35%;background:linear-gradient(90deg,var(--accent-red),var(--accent-amber))"></div>
+        </div>
+        <div class="signal-rating" style="color:var(--accent-red)">Flag Early</div>
+      </div>
+      <div class="signal-row">
+        <div class="signal-label">Strategic Priority Alignment (AI/Digital)</div>
+        <div class="signal-bar-track">
+          <div class="signal-bar-fill" style="width:20%;background:linear-gradient(90deg,var(--accent-red),var(--accent-red))"></div>
+        </div>
+        <div class="signal-rating" style="color:var(--accent-red)">Misaligned</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 80/20 RISK -->
+  <section id="risk" class="animate-in">
+    <div class="section-header">
+      <span class="section-number">06</span>
+      <h2 class="section-title">The 80/20 Problem</h2>
+    </div>
+    <div class="risk-banner">
+      <h3>Is Neptune Benson in the "80" (core) or the "20" (prune)?</h3>
+      <p>CEO Matthew Pine's aggressive simplification program is evaluating up to 10% of revenue for divestiture, already exiting ~$250M in businesses, and creating a deliberate 2% revenue headwind in 2026. If commercial aquatics is classified as non-core, Xylem may be looking to <strong>divest</strong> rather than expand its pool/spa presence.</p>
+      <div class="risk-signals">
+        <div class="risk-signal">No hiring signals for recreational water expansion</div>
+        <div class="risk-signal">M&A focus explicitly stated as "AI and software" tuck-ins</div>
+        <div class="risk-signal">Neptune Benson is a tiny brand within the portfolio (~1,683 LinkedIn followers)</div>
+        <div class="risk-signal">Zero aquatics expertise at C-suite level (all HVAC/industrial backgrounds)</div>
+        <div class="risk-signal">China orders down ~70% in Q4 2025 — defensive posture, not expansion</div>
+        <div class="risk-signal">Stock dropped 12% on conservative FY2026 guidance tied to simplification</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPETITOR COMPARISON -->
+  <section id="competitors" class="animate-in">
+    <div class="section-header">
+      <span class="section-number">07</span>
+      <h2 class="section-title">Competitive Acquirer Landscape</h2>
+    </div>
+    <div class="grid-3">
+      <div class="comp-card">
+        <div class="accent-line" style="background:var(--fluidra-color)"></div>
+        <div class="comp-score-ring" style="color:var(--fluidra-color);border-color:var(--fluidra-color)">
+          <svg width="72" height="72" style="position:absolute;transform:rotate(-90deg)">
+            <circle cx="36" cy="36" r="33" fill="none" stroke="rgba(52,211,153,0.2)" stroke-width="3"/>
+            <circle cx="36" cy="36" r="33" fill="none" stroke="var(--fluidra-color)" stroke-width="3" stroke-dasharray="207" stroke-dashoffset="0" stroke-linecap="round"/>
+          </svg>
+          10
+        </div>
+        <h3 style="color:var(--fluidra-color)">Fluidra</h3>
+        <div class="comp-desc">~€2.3B revenue · Pool & wellness is the entire business</div>
+        <div>
+          <span class="comp-tag" style="color:var(--fluidra-color);background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2)">Freepool2</span>
+          <span class="comp-tag" style="color:var(--fluidra-color);background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2)">Active Acquirer</span>
+          <span class="comp-tag" style="color:var(--fluidra-color);background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2)">Hospitality</span>
+        </div>
+        <div class="comp-detail">Most active pool tech acquirer (4 deals in 2021 + Variopool + ~$100M Aiper). Freepool2 system (UV + low-salinity electrolysis + CO₂) proves direct interest in non-chemical pool innovation. Distribution infrastructure already built for pool-specific technology scaling.</div>
+      </div>
+      <div class="comp-card">
+        <div class="accent-line" style="background:var(--pentair-color)"></div>
+        <div class="comp-score-ring" style="color:var(--pentair-color)">
+          <svg width="72" height="72" style="position:absolute;transform:rotate(-90deg)">
+            <circle cx="36" cy="36" r="33" fill="none" stroke="rgba(59,139,235,0.2)" stroke-width="3"/>
+            <circle cx="36" cy="36" r="33" fill="none" stroke="var(--pentair-color)" stroke-width="3" stroke-dasharray="207" stroke-dashoffset="20.7" stroke-linecap="round"/>
+          </svg>
+          9
+        </div>
+        <h3 style="color:var(--pentair-color)">Pentair</h3>
+        <div class="comp-desc">~$3.8B revenue · Pool/spa is ~40%+ of revenue</div>
+        <div>
+          <span class="comp-tag" style="color:var(--pentair-color);background:rgba(59,139,235,0.1);border:1px solid rgba(59,139,235,0.2)">IntelliChlor</span>
+          <span class="comp-tag" style="color:var(--pentair-color);background:rgba(59,139,235,0.1);border:1px solid rgba(59,139,235,0.2)">96% Chloramine Reduction</span>
+          <span class="comp-tag" style="color:var(--pentair-color);background:rgba(59,139,235,0.1);border:1px solid rgba(59,139,235,0.2)">Full Stack</span>
+        </div>
+        <div class="comp-detail">Already markets "up to 96% chloramine reduction without harmful chemicals" for commercial pools. Deep residential + commercial penetration. Comprehensive platform: pumps, filters, heaters, salt chlorination, lighting, automation (ScreenLogic).</div>
+      </div>
+      <div class="comp-card">
+        <div class="accent-line" style="background:var(--xylem-color)"></div>
+        <div class="comp-score-ring" style="color:var(--xylem-color)">
+          <svg width="72" height="72" style="position:absolute;transform:rotate(-90deg)">
+            <circle cx="36" cy="36" r="33" fill="none" stroke="rgba(251,191,36,0.2)" stroke-width="3"/>
+            <circle cx="36" cy="36" r="33" fill="none" stroke="var(--xylem-color)" stroke-width="3" stroke-dasharray="207" stroke-dashoffset="103.5" stroke-linecap="round"/>
+          </svg>
+          5
+        </div>
+        <h3 style="color:var(--xylem-color)">Xylem</h3>
+        <div class="comp-desc">$9.0B revenue · Aquatics is a niche within a massive portfolio</div>
+        <div>
+          <span class="comp-tag" style="color:var(--xylem-color);background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2)">Neptune Benson</span>
+          <span class="comp-tag" style="color:var(--xylem-color);background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2)">80/20 Risk</span>
+          <span class="comp-tag" style="color:var(--xylem-color);background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.2)">AI/Digital Focus</span>
+        </div>
+        <div class="comp-detail">Entry point exists via Neptune Benson heritage, but aquatics is potentially at risk under 80/20 simplification. Strategic timing is wrong — digesting Evoqua, simplifying portfolio, pivoting to digital/AI. Tier-two acquirer that upgrades to tier-one only if HydroCav proves cross-market applicability.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DILIGENCE HURDLES -->
+  <section id="diligence" class="animate-in">
+    <div class="section-header">
+      <span class="section-number">08</span>
+      <h2 class="section-title">Anticipated Diligence Hurdles</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">1 · Pathogen Performance Data</div>
+        <p class="card-note" style="line-height:1.7;margin-top:8px">Third-party inactivation data under representative bather loads and water chemistries required. Must include defensible comparison versus UV/ozone pathways already in Xylem's portfolio — especially for chlorine-tolerant pathogens (Crypto, Giardia).</p>
+      </div>
+      <div class="card">
+        <div class="card-label">2 · Compliance Reconciliation</div>
+        <p class="card-note" style="line-height:1.7;margin-top:8px">CDC guidance requires ≥1 ppm free chlorine (pools) and ≥3 ppm (hot tubs). HydroCav's "micro-dosing <1 ppm" claim must be precisely scoped: which venue classes, local codes, secondary barriers, and verification methodology.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">3 · Integration Architecture</div>
+        <p class="card-note" style="line-height:1.7;margin-top:8px">Must demonstrate how cavitation affects existing filtration + UV + controller packages: does it reduce combined-chlorine excursions, improve UV transmittance, reduce corrosion, or lower lifecycle cost? Additive value to the existing multi-barrier system is key.</p>
+      </div>
+      <div class="card">
+        <div class="card-label">4 · Scalability Evidence</div>
+        <p class="card-note" style="line-height:1.7;margin-top:8px">Product must support multi-site operator deployment with standardized monitoring, compliance verification hooks, and remote serviceability. Xylem's portfolio is engineered for enterprise-scale operations — a niche, bespoke product would increase complexity under 80/20.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATHWAYS & RECOMMENDATIONS -->
+  <section id="pathways" class="animate-in">
+    <div class="section-header">
+      <span class="section-number">09</span>
+      <h2 class="section-title">Strategic Pathways & Recommendations</h2>
+    </div>
+
+    <div style="margin-bottom:32px">
+      <h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:16px;color:var(--accent-cyan)">Best Entry Points Into Xylem</h3>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="pathway-card">
+          <div class="pathway-num">01</div>
+          <div>
+            <h4>Innovation Labs Partnerships Accelerator</h4>
+            <p>Follow the Moleaer template: nanobubble company progressed from 2023 accelerator → commercial agreement. 60+ startups across 15 countries have been engaged. Lowest friction, highest credibility path.</p>
+          </div>
+        </div>
+        <div class="pathway-card">
+          <div class="pathway-num">02</div>
+          <div>
+            <h4>Wedeco / Neptune Benson Business Unit Champions</h4>
+            <p>Engage directly with aquatics-focused business unit leaders who might champion a complementary technology from within. These teams understand the market gaps and can build internal advocacy.</p>
+          </div>
+        </div>
+        <div class="pathway-card">
+          <div class="pathway-num">03</div>
+          <div>
+            <h4>Burnt Island Ventures</h4>
+            <p>Xylem is anchor investor in this water-focused VC fund. Potential venture-stage entry point that could build relationship before a full acquisition conversation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:16px;color:var(--accent-amber)">Three Questions to Resolve First</h3>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="pathway-card">
+          <div class="pathway-num" style="color:var(--accent-amber)">?1</div>
+          <div>
+            <h4>Is Neptune Benson in the "80" or the "20"?</h4>
+            <p>Determine through industry contacts or by tracking whether Xylem is investing in or divesting from aquatics. This single data point determines whether Xylem is worth pursuing at all.</p>
+          </div>
+        </div>
+        <div class="pathway-card">
+          <div class="pathway-num" style="color:var(--accent-amber)">?2</div>
+          <div>
+            <h4>Does cavitation have cross-market applications?</h4>
+            <p>Industrial wastewater, PFAS treatment, building water systems — any applicability to Xylem's higher-priority markets would dramatically increase strategic interest and reframe the acquisition thesis entirely.</p>
+          </div>
+        </div>
+        <div class="pathway-card">
+          <div class="pathway-num" style="color:var(--accent-amber)">?3</div>
+          <div>
+            <h4>Have you engaged Fluidra and Pentair yet?</h4>
+            <p>These conversations should be prioritized. Pool/spa is core business for both, M&A appetite for water treatment innovation is active, and the organizational fit for a small innovative company is fundamentally stronger.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY TIMELINE -->
+  <section class="animate-in">
+    <div class="section-header">
+      <span class="section-number">10</span>
+      <h2 class="section-title">Xylem Key Events Timeline</h2>
+    </div>
+    <div class="card">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">MAY 2023</div>
+          <div class="tl-title">Evoqua Acquisition Closes</div>
+          <div class="tl-desc">$7.5B all-stock deal. Creates world's largest pure-play water technology company. Inherits Neptune Benson aquatics brand.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">JAN 2024</div>
+          <div class="tl-title">Matthew Pine Becomes CEO</div>
+          <div class="tl-desc">Replaces Patrick Decker. Background: Carrier, Vestas, Lennox. Immediately signals "simplification" strategy.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">JAN 2024</div>
+          <div class="tl-title">Segment Realignment</div>
+          <div class="tl-desc">Four new segments created including "Water Solutions & Services" — unifying legacy Evoqua services with Xylem to accelerate synergies.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024–2025</div>
+          <div class="tl-title">80/20 Simplification Launches</div>
+          <div class="tl-desc">Up to 10% of revenue evaluated for divestiture. Specialty anodes and international metering divested (~$250M). AI/software M&A prioritized.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">DEC 2025</div>
+          <div class="tl-title">SBTi Targets Approved</div>
+          <div class="tl-desc">Climate Action Plan updated. 42% Scope 1 & 2 reduction by 2030. Net-zero by 2050 commitment formalized.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">FEB 2026</div>
+          <div class="tl-title">FY2025 Results & Conservative Guidance</div>
+          <div class="tl-desc">Record $9.0B revenue. But FY2026 guidance of $9.1–9.2B disappoints — 2% simplification headwind. Stock drops 12%. $1.5B buyback announced.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span>Ambitious Realism · HydroCav Strategic Intelligence</span>
+  <span>Sources: Xylem 10-K (FY2025), investor materials, sustainability reports, Neptune Benson product literature, CDC/NIOSH guidance · Feb 2026</span>
+</footer>
+
+<script>
+// Scroll-triggered animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+
+// Active nav pill tracking
+const sections = document.querySelectorAll('section[id], .hero[id]');
+const navPills = document.querySelectorAll('.nav-pill');
+
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navPills.forEach(pill => {
+        pill.classList.toggle('active', pill.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { threshold: 0.3, rootMargin: '-120px 0px -60% 0px' });
+
+sections.forEach(section => navObserver.observe(section));
+
+// Smooth scroll for nav pills
+navPills.forEach(pill => {
+  pill.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.querySelector(pill.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// Animate signal bars on scroll
+const signalObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.signal-bar-fill').forEach(bar => {
+        const w = bar.style.width;
+        bar.style.width = '0%';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => { bar.style.width = w; });
+        });
+      });
+      signalObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('#alignment .card').forEach(el => signalObserver.observe(el));
+</script>
+
+</body>
+</html>
